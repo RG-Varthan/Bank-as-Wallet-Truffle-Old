@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Wallet as Bank</title>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css' rel='stylesheet' type='text/css'>
+  <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js"></script>
+  <script src="app.js"></script>
+  </head>
+  <body>
+  <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">Wallet as Bank</a>
+        </div>
+        <ul class="nav navbar-nav">
+          <!-- <li class="active"><a href="#">Home</a></li>
+          <li><a href="#" onclick="App.broker();">Broker</a></li>
+          <li><a href="#" onclick="App.trader();" >Trader</a></li> -->
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li id="b_stack"></li>
+          <li><label for="account">Account<input type="text" class="form-control" id="account" readonly/></label></li>
+          <li><label for="balence">Balence in ETH<input type="text" class="form-control" id="balance" readonly/></span></label></li>
+        </ul>
+      </div>
+    </nav>
+    <div class="container-fluid">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="col-sm-5">
+                <div id="bank-info"></div>
+                <div id="balance-address"></div>
+                
+                  <div id="reg_bank">
+                    <h2>Register bank</h2>
+                    <div><input type="text" id="bank-name" placeholder="Bank Name" /></div>
+                    <div> <input type="text" id="loan-interest" placeholder="Loan Interest" /></div>
+                    <div> <input type="text" id="deposit-interest" placeholder="Deposit Interest" /></div>
+                    <div> <input type="text" id="interest" placeholder="Interest" /></div>
+                    <a href="#" class="btn btn-primary" id="register-bank">Register</a>
+                  </div>
+                  <br>
+                  <div class="row">
+                      <div>
+                          <form>
+                              <div class="form-group col-sm-4">
+                                <label for="deposit-amount">Deposit Money As Bank</label>
+                                <input type="text" id="deposit-amount" class="form-control" placeholder="Deposit Amount (specify Ether)" />
+                                <a href="#" class="btn btn-primary form-control" id="deposit-bank">Deposit</a>
+                              </div>
+
+                              <div class="form-group col-sm-4">
+                                <label for="Witdraw-amount">Withdraw Money From Bank</label>
+                                <input type="text" id="withdraw-amount" class="form-control" placeholder="Amount (specify Ether)" />
+                                <a href="#" class="btn btn-primary form-control" id="withdraw-bank">Withdraw</a>
+                              </div>
+                          
+                                
+                              <div class="form-group col-sm-4">
+                                <label for="Loan_id">Loan Due Settlement</label>
+                                <input type="text" id="Loan_id" class="col-sm-4 form-control" placeholder="Loan ID" />
+                                <input type="button" class="btn btn-primary form-control" id="due-bank" value="Pay Due" onclick="App.pay_due();" />
+                              </div>
+                          </form>
+                        </div>
+                 
+                         <div id="status"></div>
+                  </div>
+                  <div class="row">
+                      <div>
+                          <h2>Get Loan From Bank</h2>
+                          
+                              <div class="form-group col-sm-8">
+                                  <input type="text" id="loan-address" class="form-control" placeholder="Bank Address" />
+                              </div>
+                               <div class="form-group col-sm-8">
+                                 <input type="text" id="loan-amount" class="form-control" placeholder="Loan Amount (specify Ether)" />
+                               </div>
+                               <div class="form-group col-sm-8">
+                                  <input type="text" id="loan-time" class="form-control" placeholder="Loan time (specify yrs)" />
+                                </div>
+
+                                 <input type="button" class="btn btn-primary" onclick="App.get_loan();"  id="loan-bank" value="Get Loan"/>
+                        </div>
+                 
+                         <div id="loan-status"></div>
+                  </div>    
+            </div>
+            <div class="col-sm-7" id="bank_list">
+
+            </div>    
+          </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                
+                <div class="col-sm-4">
+                    <h2>Lending Loan Details</h2>
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th>Bank Address</th>
+                          <th>Total Amount</th>
+                          <th>Total Period</th>
+                        </tr>
+                      </thead>
+                      <tbody id="loan_list">
+
+                      </tbody>
+                  </table>
+                </div>
+                <div class="col-sm-8">
+                    <h2>Borrowing Loan Details</h2>
+                    <table class="table table-striped">
+                        <thead>
+                          <tr>
+                            <th>Loan Id</th>
+                            <th>Bank Address</th>
+                            <th>Total Amount</th>
+                            <th>Total Paid Ins.</th>
+                            <th>Last Paid</th>
+                            <th>Total Months</th>
+                            <th>Balance Loan</th>
+                            <th>Installment Amount</th>
+                          </tr>
+                        </thead>
+                        <tbody id="get_loan_list">
+  
+                        </tbody>
+                      </table>
+                  </div>  
+            </div>
+        </div>
+    </div>
+
+
+    <hr>
+
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="col-sm-5">       
+              <div class="row">
+                  <div>
+                      <h2>Fixed Deposit to Other Bank</h2>
+                      
+                          <div class="form-group col-sm-8">
+                              <input type="text" id="bnk-address" class="form-control" placeholder="Bank Address" />
+                          </div>
+                           <div class="form-group col-sm-8">
+                             <input type="text" id="fix-dep-amount" class="form-control" placeholder="Amount (specify Ether)" />
+                           </div>
+                           <div class="form-group col-sm-8">
+                              <input type="text" id="fix-dep-time" class="form-control" placeholder="Period (specify yrs)" />
+                            </div>
+
+                             <input type="button" class="btn btn-primary" onclick="App.fix_dep();"  id="fix-bank" value="Deposit"/>
+                    </div>
+             
+                     <div id="fix-status"></div>
+              </div>    
+        </div>
+
+        <div class="col-sm-5">       
+          <div class="row">
+              <div>
+                  <h2>User Request to get Amount</h2>
+                  
+                  <div class="form-group col-sm-8">
+                      <input type="text" id="bank-fix-address" class="form-control" placeholder="Bank Address" />
+                  </div>
+                  <input type="button" class="btn btn-primary" onclick="App.fix_req();"  id="fix-user-req" value="Get amount"/>
+                  <div id="fix-req-status"></div>
+                </div>      
+          </div>
+          <div class="row">
+            <div>
+                <h2>Owner Settlement</h2>
+                
+                <div class="form-group col-sm-8">
+                    <input type="text" id="user-fix-address" class="form-control" placeholder="User Address" />
+                </div>
+                <input type="button" class="btn btn-primary" onclick="App.fix_set();"  id="fix-bank-set" value="Settle Amount"/>
+                <div id="fix-set-status"></div>
+             </div>      
+          </div>
+
+        </div>
+
+      </div>    
+    </div>
+    
+    <div class="row">
+        <div class="col-sm-12">
+            
+            <div class="col-sm-5">
+                <h2>As a Bank </h2>
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th>User Address</th>
+                      <th>Amount</th>
+                      <th>End Time</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="fix_user_list">
+
+                  </tbody>
+              </table>
+            </div>
+            <div class="col-sm-7">
+                <h2>As a User</h2>
+                <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th>Bank Address</th>
+                        <th>Amount</th>
+                        <th>End Time</th>
+                        <th>Years</th>
+                        <th>Status</th>
+                      </tr>
+                    </thead>
+                    <tbody id="fix_bank_list">
+
+                    </tbody>
+                  </table>
+              </div>  
+        </div>
+    </div>
+  </body>
+</html>
